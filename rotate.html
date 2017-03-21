@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>rotate</title>
+  <style type="text/css">
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    body {
+      background: #1b1b1b;
+    }
+
+    #con {
+      margin: 50px auto;
+      width: 300px;
+      height: 300px;
+    }
+
+    canvas {
+      background: #fff;
+    }
+  </style>
+</head>
+<body>
+<div id="con">
+  <canvas id="myCanvas" width="300" height="300"></canvas>
+</div>
+<script type="text/javascript">
+  window.onload = function () {
+    draw();
+  };
+  function drawTop(ctx, fillStyle) {
+    ctx.fillStyle = fillStyle;
+    ctx.beginPath();
+    ctx.arc(0, 0, 30, 0, Math.PI, true);
+    ctx.closePath();
+    ctx.fill();
+  }
+  function drawGrip(ctx) {
+    ctx.save();
+    ctx.fillStyle = 'blue';
+    ctx.fillRect(-1.5, 0, 1.5, 40);
+    ctx.beginPath();
+    ctx.strokeStyle = 'blue';
+    ctx.arc(-5, 40, 4, Math.PI, Math.PI * 2, true);
+    ctx.stroke();
+    ctx.closePath();
+    ctx.restore();
+  }
+  function draw() {
+    var c = document.getElementById('myCanvas');
+    var ctx = c.getContext('2d');
+    ctx.translate(150, 150);
+    for (var i = 0; i < 8; i++) {
+      ctx.save();
+      // 旋转角度，以弧度计。如转换为弧度，使用 degrees*Math.PI/180 进行计算。
+      ctx.rotate(Math.PI * (2 / 4 + i / 4));
+      ctx.translate(0, -100);
+      drawTop(ctx, 'rgb(' + (30 * i) + ',' + (255 - 30 * i) + ',255)');
+      drawGrip(ctx);
+      ctx.restore();
+    }
+  }
+</script>
+</body>
+</html>
